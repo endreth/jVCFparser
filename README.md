@@ -7,7 +7,7 @@ VCF 4.2 description (23.08.2022): The manual can be accessed on [SAMtools site](
 
 Sample data used for testing:
 
-~25K SNP (loci) and 180 sample matrix: [Sessile oak (Q. petraea (Matt.) Liebl.) SNP dataset; de novo assembly](https://zenodo.org/record/3908963); File size: ~15MB<br>
+~25K SNP (loci) and 180 sample matrix: [Sessile oak SNP dataset; de novo assembly](https://zenodo.org/record/3908963); File size: ~15MB<br>
 ~50K SNP (loci) and ~20K sample matrix: [SoySNP50K iSelect BeadChip, Wm82.a1](https://soybase.org/snps/); File size: ~3.5GB<br>
 ~1.3M SNP (loci) and ~2K sample matrix: [1000 genomes project, Phase 3, Chromosome 21](http://hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/); File size: ~10GB<br>
 
