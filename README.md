@@ -9,9 +9,9 @@ Sample data used for testing:
 
 ~25K SNP (loci) and 180 sample matrix: [Sessile oak (Q. petraea (Matt.) Liebl.) SNP dataset; de novo assembly](https://zenodo.org/record/3908963); File size: ~15MB<br>
 ~50K SNP (loci) and ~20K sample matrix: [SoySNP50K iSelect BeadChip, Wm82.a1](https://soybase.org/snps/); File size: ~3.5GB<br>
-~1,3M SNP (loci) and ~2K sample matrix: [1000 genomes project, Phase 3, Chromosome 21](http://hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/); File size: ~10GB<br>
+~1.3M SNP (loci) and ~2K sample matrix: [1000 genomes project, Phase 3, Chromosome 21](http://hgdownload.cse.ucsc.edu/gbdb/hg19/1000Genomes/phase3/); File size: ~10GB<br>
 
-Allele and genoty counts for reading the files are the following:
+Allele and genotype counts for reading the files are the following:<br>
 - Number of reference allele '0'
 - Number of alternative allele '1'
 - Number of unique alleles
@@ -20,7 +20,7 @@ Allele and genoty counts for reading the files are the following:
 - Number of missing genotypes (e.g. ./.)
 - Number of unique genotypes
 
-Currently implemented diversity-ralated descriptive statistics, and calculations (and counts) as follows:
+Currently implemented diversity-ralated descriptive statistics, and calculations (and counts) as follows:<br>
 - Number of missing genotypes
 - Number of REF alleles
 - Number of ALT alleles
