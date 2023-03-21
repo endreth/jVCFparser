@@ -1,6 +1,7 @@
 package hu.jvcfparser;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +19,7 @@ public class Main {
         //readVCF("C:\\Users\\thend\\Desktop\\jVCFparser\\soysnp50k_wm82.a1_41317.vcf");
         //readVCF("C:\\Users\\thend\\Desktop\\jVCFparserBeta\\ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf");
         //readVCF("C:\\Users\\thend\\Desktop\\jVCFparserBeta\\populations.snps.vcf");
-        Map vcf = readVCF("C:\\Users\\thend\\Desktop\\jVCFparser\\pop.snps.vcf");
+        Map vcf = readVCF("C:\\Users\\thend\\Desktop\\jVCFparser\\FilesToTestCalculations\\populations.snps.vcf");
 
         numOfMissingGT(vcf);
         numOfREFAllele(vcf);
@@ -435,7 +436,7 @@ public class Main {
             if (n < 0 || n > N) {
                 numCombinationsInNumeratorRef = 0.0;    // By convention (N choose n) = 0 when N < n
             } else {
-                numCombinationsInNumeratorRef = CombinatoricsUtils.binomialCoefficient(N, n);
+                numCombinationsInNumeratorRef = (long) CombinatoricsUtils.binomialCoefficientDouble(N, n);
             }
             N = numAlleles - numOfAltAllele;
             n = numSamples; // n must be between 0 and N
@@ -443,7 +444,7 @@ public class Main {
             if (n < 0 || n > N) {
                 numCombinationsInNumeratorAlt = 0.0;    // By convention (N choose n) = 0 when N < n
             } else {
-                numCombinationsInNumeratorAlt = CombinatoricsUtils.binomialCoefficient(N, n);
+                numCombinationsInNumeratorAlt = (long) CombinatoricsUtils.binomialCoefficientDouble(N, n);
             }
             N = numAlleles;
             n = numSamples; // n must be between 0 and N
@@ -451,7 +452,7 @@ public class Main {
             if (n < 0 || n > N) {
                 numCombinationsInDenominator = 0.0;    // By convention (N choose n) = 0 when N < n
             } else {
-                numCombinationsInDenominator = CombinatoricsUtils.binomialCoefficient(N, n);
+                numCombinationsInDenominator = (long) CombinatoricsUtils.binomialCoefficientDouble(N, n);
             }
             double refAR;
             double altAR;
@@ -469,5 +470,6 @@ public class Main {
         double rounded = Math.round(summedAR * 1000.0) / 1000.0;
         System.out.println("Allelic Richness (Ar): "+rounded);
     }
+    
 
 }
