@@ -21,14 +21,14 @@ public class Main {
         source.setRequired(true);
         options.addOption(source);
 
-        options.addOption(new Option("c", "agcounts", false, "Allele-Genotype counts"));
+        options.addOption(new Option("agc", "agcounts", false, "Allele-Genotype counts"));
         options.addOption(new Option("oh", "obshet", false, "Average Observed Heterozygosity (Ho)"));
         options.addOption(new Option("eh", "exphet", false, "Average Expected Heterozygosity (He)"));
         options.addOption(new Option("ueh", "uexphet", false, "Average Unbiased Expected Heterozygosity (uHe)"));
         options.addOption(new Option("sh", "shann", false, "Average Shannon's Information Index (H)"));
         options.addOption(new Option("si", "simp", false, "Average Simpson's Diversity Index (D)"));
-        options.addOption(new Option("f", "fix", false, "Average Fixation Index (F)"));
-        options.addOption(new Option("a", "ar", false, "Average Allelic Richness (Ar)"));
+        options.addOption(new Option("fx", "fix", false, "Average Fixation Index (F)"));
+        options.addOption(new Option("ar", "arich", false, "Average Allelic Richness (Ar)"));
 
         CommandLine cmd;
         CommandLineParser parser = new BasicParser();
@@ -46,7 +46,7 @@ public class Main {
                 vcf.setVcfMap(parse.readVCF(opt_config));
             }
 
-            if(cmd.hasOption("c")) {
+            if(cmd.hasOption("agc")) {
                 clc.numOfMissingGT(vcf.getVcfMap());
                 clc.numOfREFAllele(vcf.getVcfMap());
                 clc.numOfALTAllele(vcf.getVcfMap());
@@ -73,7 +73,7 @@ public class Main {
             if(cmd.hasOption("si")) {
                 clc.calcSimpsonsI(vcf.getVcfMap());
             }
-            if(cmd.hasOption("f")) {
+            if(cmd.hasOption("fx")) {
                 clc.calcFixationI(vcf.getVcfMap());
             }
             if(cmd.hasOption("a")) {

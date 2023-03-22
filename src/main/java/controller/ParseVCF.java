@@ -54,7 +54,16 @@ public class ParseVCF {
 
                 if (line.charAt(0) != '#') {
                     String[] values = line.split("\t");
+
+                    String[] characters = new String[]{"-", "\\", "|", "/"};
+                    int index = 0;
+
                     for (int i = 0; i < values.length; i++) {
+
+                        System.out.print("\rReading in progress... " + characters[index]);
+                        index = (index + 1) % characters.length;
+
+
                         if(i < 9){
                             String columnName = columnNames[i];
                             List<String> valuesList = locusData.get(columnName);
@@ -100,16 +109,17 @@ public class ParseVCF {
                     locusData.get("LOCUSSTAT").add(concatenatedValues);
                 }
             }
-            // Print locus stats
-            var locis = (List<String>) locusData.get("LOCUSSTAT");
-            locis.forEach(System.out::println);
+//            // Print locus stats
+//            var locis = (List<String>) locusData.get("LOCUSSTAT");
+//            locis.forEach(System.out::println);
 
             //Print elapsed time
             long finish = System.currentTimeMillis();
             long timeElapsed = finish - start;
             long minutes = (timeElapsed / 1000) / 60;
             long seconds = (timeElapsed / 1000) % 60;
-            System.out.println(timeElapsed + " Milliseconds = "+ minutes + " minutes and "+ seconds + " seconds.");
+            System.out.println();
+            System.out.println("Reading finished in: "+timeElapsed + " Milliseconds ("+ minutes + " minutes and "+ seconds + " seconds)");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
