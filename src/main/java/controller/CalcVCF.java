@@ -1,161 +1,16 @@
-package hu.jvcfparser;
+package controller;
 
-import java.io.*;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Stream;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
-public class Main {
-    public static void main(String[] args) {
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
-        //readVCF("C:\\Users\\thend\\Desktop\\jVCFparser\\soysnp50k_wm82.a1_41317.vcf");
-        //readVCF("C:\\Users\\thend\\Desktop\\jVCFparserBeta\\ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf");
-        //readVCF("C:\\Users\\thend\\Desktop\\jVCFparserBeta\\populations.snps.vcf");
-        Map vcf = readVCF("C:\\Users\\thend\\Desktop\\jVCFparser\\FilesToTestCalculations\\populations.snps.vcf");
+public class CalcVCF {
 
-        numOfMissingGT(vcf);
-        numOfREFAllele(vcf);
-        numOfALTAllele(vcf);
-        numOfGenotypes(vcf);
-        numOfDiffGenotypes(vcf);
-        numOfDiffAlleles(vcf);
-        numOfEffAlleles(vcf);
-        numOfHeterozygotes(vcf);
-        numOfHomozygotes(vcf);
-        calcObsHeterozygosity(vcf);
-        calcExpHeterozygosity(vcf);
-        calcUnbiasedExpHeterozygosity(vcf);
-        calcShannonsI(vcf);
-        calcSimpsonsI(vcf);
-        calcFixationI(vcf);
-        calcAR(vcf);
-
-        //TODO:
-        // Percentage of missing alleles
-        // Percentage of missing genotypes
-        // PIC (Polymorphism Information Content)
-        // Sample (Individual) subsetting
-        // Loci (SNP) subsetting
-        // Command line parser with parameters
-        // Lot other things..
-    }
-
-    public static Map readVCF(String filePath) {
-
-        String[] columnNames = new String[0];
-        Map<String, List<String>> locusData = new HashMap<>();
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8),1024*1024)) {
-            String line = null;
-            // Parse header
-            while ((line = br.readLine()) != null) {
-                if (line.charAt(0) == '#' && line.charAt(1) != '#') {
-                    columnNames = line.split("\t");
-                    break;
-                }
-            }
-            // Create a map to store the column data
-            for (int i = 0; i < columnNames.length; i++) {
-                if (i < 9){
-                    locusData.put(columnNames[i], new ArrayList<>());
-                }
-            }
-            locusData.put("LOCUSSTAT", new ArrayList<String>());
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8),1024*1024)) {
-            String line = null;
-            long start = System.currentTimeMillis();
-            // Read the data row by row and store the column data in the map
-            while ((line = br.readLine()) != null) {
-                // Genotype counts
-                AtomicInteger homoCounter = new AtomicInteger(0);   // Counts homozygote allele combinations
-                AtomicInteger hetCounter = new AtomicInteger(0);    // Counts heterozygote allele combinations
-                AtomicInteger missCounter = new AtomicInteger(0);   // Counts missing allele combinations (.|. or ./.), missing genotypes
-                Set<String> uniqueGenotypes = new HashSet<>();              // Counts unique (different) genotypes
-                Set<String> uniqueAlleles = new HashSet<>();                // Counts unique (different) alleles
-
-                // Allele counts
-                AtomicInteger refCounter = new AtomicInteger(0);
-                AtomicInteger altCounter = new AtomicInteger(0);
-
-                if (line.charAt(0) != '#') {
-                    String[] values = line.split("\t");
-                    for (int i = 0; i < values.length; i++) {
-                        if(i < 9){
-                            String columnName = columnNames[i];
-                            List<String> valuesList = locusData.get(columnName);
-                            valuesList.add(values[i]);
-                        } else if (i > 8) {
-                            String genotype = values[i].split(":")[0].replace("|", "-").replace("/", "-");
-                            // Genotype counts
-                            if (genotype.equals("0-0") || genotype.equals("1-1")){
-                                homoCounter.incrementAndGet();
-                            } else if (genotype.equals("1-0") || genotype.equals("0-1")) {
-                                hetCounter.incrementAndGet();
-                            } else if (genotype.equals(".-.")) {
-                                missCounter.incrementAndGet();
-                            }
-                            // Unique genotypes
-                            if (genotype.equals("0-0") || genotype.equals("1-1") || genotype.equals("1-0") || genotype.equals("0-1")){
-                                uniqueGenotypes.add(genotype);
-                            }
-                            // Allele counts
-                            String[] alleles = genotype.split("-");
-                            Arrays.stream(alleles).forEach(allele -> {
-                                if(!allele.equals(".")){
-                                    if (allele.equals("0")){
-                                        refCounter.incrementAndGet();
-                                        uniqueAlleles.add(allele);
-                                    }
-                                    if (allele.equals("1")){
-                                        altCounter.incrementAndGet();
-                                        uniqueAlleles.add(allele);
-                                    }
-                                }
-                            });
-                        }
-                    }
-                    String concatenatedValues = String.join(":",
-                            String.valueOf(homoCounter.get()),  //1st column [0]
-                            String.valueOf(hetCounter.get()),   //2nd column [1]
-                            String.valueOf(missCounter.get()),  //3rd column [2]
-                            String.valueOf(refCounter.get()),   //4th column [3]
-                            String.valueOf(altCounter.get()),   //5th column [4]
-                            String.valueOf(uniqueGenotypes.size()), //6th column [5]
-                            String.valueOf(uniqueAlleles.size()));  //7th column [6]
-                    locusData.get("LOCUSSTAT").add(concatenatedValues);
-                }
-            }
-            // Print locus stats
-            var locis = (List<String>) locusData.get("LOCUSSTAT");
-            locis.forEach(System.out::println);
-
-            //Print elapsed time
-            long finish = System.currentTimeMillis();
-            long timeElapsed = finish - start;
-            long minutes = (timeElapsed / 1000) / 60;
-            long seconds = (timeElapsed / 1000) % 60;
-            System.out.println(timeElapsed + " Milliseconds = "+ minutes + " minutes and "+ seconds + " seconds.");
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return locusData;
-    }
-
-    public static void numOfMissingGT(Map vcf){
+    public void numOfMissingGT(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicInteger sumMissing = new AtomicInteger(0);
         lstat.forEach(locus->{
@@ -165,7 +20,7 @@ public class Main {
         System.out.println("Number of missing genotypes: "+sumMissing.get());
     }
 
-    public static void numOfREFAllele(Map vcf){
+    public void numOfREFAllele(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicInteger sumRefAllele = new AtomicInteger(0);
         lstat.forEach(locus->{
@@ -175,7 +30,7 @@ public class Main {
         System.out.println("Number of REF alleles: "+sumRefAllele.get());
     }
 
-    public static void numOfALTAllele(Map vcf){
+    public void numOfALTAllele(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicInteger sumAltAllele = new AtomicInteger(0);
         lstat.forEach(locus->{
@@ -185,7 +40,7 @@ public class Main {
         System.out.println("Number of ALT alleles: "+sumAltAllele.get());
     }
 
-    public static void numOfGenotypes(Map vcf){
+    public void numOfGenotypes(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicInteger sumHomo = new AtomicInteger(0);
         lstat.forEach(locus->{
@@ -201,7 +56,7 @@ public class Main {
         System.out.println("Number of genotypes: "+numOfGenotypes);
     }
 
-    public static void numOfDiffGenotypes(Map vcf){
+    public void numOfDiffGenotypes(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicInteger sumUniqueGenotype = new AtomicInteger(0);
         lstat.forEach(locus->{
@@ -213,7 +68,7 @@ public class Main {
         System.out.println("Average number of different genotypes (Ng): "+rounded);
     }
 
-    public static void numOfDiffAlleles(Map vcf){
+    public void numOfDiffAlleles(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicInteger sumDiffAlleles = new AtomicInteger(0);
         lstat.forEach(locus->{
@@ -225,7 +80,7 @@ public class Main {
         System.out.println("Average number of different alleles (Na): "+rounded);
     }
 
-    public static void numOfEffAlleles(Map vcf){
+    public void numOfEffAlleles(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicReference<Double> sumLociEffAlleles = new AtomicReference<>(0.0);
         lstat.forEach(locus->{
@@ -251,7 +106,7 @@ public class Main {
         System.out.println("Average number of effective alleles (Ne): "+rounded);
     }
 
-    public static void numOfHeterozygotes(Map vcf){
+    public void numOfHeterozygotes(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicInteger sumHeterozygotes = new AtomicInteger(0);
         lstat.forEach(locus->{
@@ -261,7 +116,7 @@ public class Main {
         System.out.println("Number of heterozygotes: "+sumHeterozygotes.get());
     }
 
-    public static void numOfHomozygotes(Map vcf){
+    public void numOfHomozygotes(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicInteger sumHomozygotes = new AtomicInteger(0);
         lstat.forEach(locus->{
@@ -271,7 +126,7 @@ public class Main {
         System.out.println("Number of homozygotes: "+sumHomozygotes.get());
     }
 
-    public static void calcObsHeterozygosity(Map vcf){
+    public void calcObsHeterozygosity(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicReference<Double> sumObsHet = new AtomicReference<>(0.0);
         lstat.forEach(locus->{
@@ -286,7 +141,7 @@ public class Main {
         System.out.println("Average Observed Heterozygosity (Ho): "+rounded);
     }
 
-    public static void calcExpHeterozygosity(Map vcf){
+    public void calcExpHeterozygosity(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicReference<Double> sumExpHet = new AtomicReference<>(0.0);
         lstat.forEach(locus->{
@@ -306,7 +161,7 @@ public class Main {
         System.out.println("Average Expected Heterozygosity (He): "+rounded);
     }
 
-    public static void calcUnbiasedExpHeterozygosity(Map vcf){
+    public void calcUnbiasedExpHeterozygosity(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicReference<Double> sumUnbiasedExpHet = new AtomicReference<>(0.0);
         lstat.forEach(locus->{
@@ -332,7 +187,7 @@ public class Main {
         System.out.println("Average Unbiased Expected Heterozygosity (uHe): "+rounded);
     }
 
-    public static void calcShannonsI(Map vcf){
+    public void calcShannonsI(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicReference<Double> sumShannon = new AtomicReference<>(0.0);
         lstat.forEach(locus->{
@@ -360,10 +215,10 @@ public class Main {
         });
         double summedAvgShannon = sumShannon.get() / lstat.size();
         double rounded = Math.round(summedAvgShannon * 1000.0) / 1000.0;
-        System.out.println("Average Shannon's Information Index (SI): "+rounded);
+        System.out.println("Average Shannon's Information Index (H): "+rounded);
     }
 
-    public static void calcSimpsonsI(Map vcf){
+    public void calcSimpsonsI(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicReference<Double> sumSimpson = new AtomicReference<>(0.0);
         lstat.forEach(locus->{
@@ -383,7 +238,7 @@ public class Main {
         System.out.println("Average Simpson's Diversity Index (D): "+rounded);
     }
 
-    public static void calcFixationI(Map vcf){
+    public void calcFixationI(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicReference<Double> sumF = new AtomicReference<>(0.0);
         lstat.forEach(locus->{
@@ -415,7 +270,7 @@ public class Main {
         System.out.println("Average Fixation Index (F): "+rounded);
     }
 
-    public static void calcAR(Map vcf){
+    public void calcAR(Map vcf){
         var lstat = (List<String>) vcf.get("LOCUSSTAT");
         AtomicReference<Double> sumAR = new AtomicReference<>(0.0);
         lstat.forEach(locus->{
