@@ -13,6 +13,17 @@ $ java -jar jVCFparser.jar -f ".\populations.snps.vcf" -agc -oh -eh
 ```
 ![image](https://user-images.githubusercontent.com/104054427/226903182-23d5e9aa-1b05-4381-9647-75c658f05bb8.png)
 
+| Flag | LFlag | Description |
+| --- | --- | --- |
+| `-agc` | `-agcounts` | Allele-genotype counts |
+| `-oh` | `-obshet` | Average Observed Heterozygosity (Ho) |
+| `-eh` | `-exphet` | Average Expected Heterozygosity (He) |
+| `-ueh` | `-uexphet` | Average Unbiased Expected Heterozygosity (uHe) |
+| `-sh` | `-shann` | Average Shannon's Information Index (H) |
+| `-si` | `-simp` | Average Simpson's Diversity Index (D) |
+| `-fx` | `-fix` | Average Fixation Index (F) |
+| `-ar` | `-arich` | Average Allelic Richness (Ar) |
+
 <b>Requirements:</b><br>
 GNU/Linux, Microsoft Windows, or macOS<br>
 JRE (JDK 11 or later)<br>
@@ -100,7 +111,7 @@ F represents the Average Fixation Index, averaged across n loci. It is calculate
 <b>Average Allelic Richness (Ar):</b>
 
 ![ar](https://user-images.githubusercontent.com/104054427/226842779-bcde0246-d58d-4226-9c0e-eea1b6014b5d.png)<br>
-Ar represents the Average Allelic Richness, defined as the expected number of species in a sample of n genotypes selected at random from a collection containing N alleles ("genes") from S loci. It is calculated as the number of alleles observed in a sample of size N<sub>i</sub>, normalized by the sample size N<sub>i</sub> and averaged across S loci. Based on Hurlbert (1971) and El Mousadik & Petit (1996).<br>
+Ar represents the Average Allelic Richness, defined as the expected number of species in a sample of n genotypes selected at random from a collection containing N alleles ("genes") from S loci. It is calculated as the number of alleles observed in a sample of size N<sub>i</sub>, normalized by the sample size N<sub>i</sub> and averaged across S loci. Based on Hurlbert (1971) and El Mousadik & Petit (1996). NOTE: Not designed and not suitable for big data!<br>
 
 </details>
 
