@@ -5,6 +5,18 @@ This is a beta version of the jVCFparser command line tool for processing varian
 
 VCF 4.2 description (23.08.2022): The manual can be accessed on [SAMtools site](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
 
+### Usage (example)
+
+Get the JAR artifact [HERE](https://github.com/endreth/jVCFparser/blob/7dfacf604013e732b53484171909c0b713c56537/out/artifacts/jVCFparser_jar/jVCFparser.jar)!
+```
+$ java -jar jVCFparser.jar -f ".\populations.snps.vcf" -agc -oh -eh
+```
+![image](https://user-images.githubusercontent.com/104054427/226903182-23d5e9aa-1b05-4381-9647-75c658f05bb8.png)
+
+<b>Requirements:</b><br>
+GNU/Linux, Microsoft Windows, or macOS<br>
+JRE (JDK 11 or later)<br>
+
 <b>Sample data used for testing:</b><br>
 ~25K SNP (loci) and 180 sample matrix: [Sessile oak SNP dataset; de novo assembly](https://zenodo.org/record/3908963); File size: ~15MB<br>
 ~50K SNP (loci) and ~20K sample matrix: [SoySNP50K iSelect BeadChip, Wm82.a1](https://soybase.org/snps/); File size: ~3.5GB<br>
