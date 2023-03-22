@@ -76,7 +76,7 @@ public class Main {
             if(cmd.hasOption("fx")) {
                 clc.calcFixationI(vcf.getVcfMap());
             }
-            if(cmd.hasOption("a")) {
+            if(cmd.hasOption("ar")) {
                 clc.calcAR(vcf.getVcfMap());
             }
 
