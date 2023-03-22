@@ -14,7 +14,6 @@ import org.apache.commons.math3.util.CombinatoricsUtils;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
 
         //readVCF("C:\\Users\\thend\\Desktop\\jVCFparser\\soysnp50k_wm82.a1_41317.vcf");
         //readVCF("C:\\Users\\thend\\Desktop\\jVCFparserBeta\\ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf");
@@ -211,7 +210,7 @@ public class Main {
         });
         double avgNumOfDiffGenotypes = (double) sumUniqueGenotype.get() / lstat.size();
         double rounded = Math.round(avgNumOfDiffGenotypes * 1000.0) / 1000.0;
-        System.out.println("Number of different genotypes: "+rounded);
+        System.out.println("Average number of different genotypes (Ng): "+rounded);
     }
 
     public static void numOfDiffAlleles(Map vcf){
@@ -223,7 +222,7 @@ public class Main {
         });
         double avgNumOfDiffAlleles = (double) sumDiffAlleles.get() / lstat.size();
         double rounded = Math.round(avgNumOfDiffAlleles * 1000.0) / 1000.0;
-        System.out.println("Number of different alleles (Na): "+rounded);
+        System.out.println("Average number of different alleles (Na): "+rounded);
     }
 
     public static void numOfEffAlleles(Map vcf){
@@ -249,7 +248,7 @@ public class Main {
         });
         double avgnumOfEffAlleles = sumLociEffAlleles.get() / lstat.size();
         double rounded = Math.round(avgnumOfEffAlleles * 1000.0) / 1000.0;
-        System.out.println("Number of effective alleles (Ne): "+rounded);
+        System.out.println("Average number of effective alleles (Ne): "+rounded);
     }
 
     public static void numOfHeterozygotes(Map vcf){
@@ -284,7 +283,7 @@ public class Main {
         });
         double summedAvgObsHet = sumObsHet.get() / lstat.size();
         double rounded = Math.round(summedAvgObsHet * 1000.0) / 1000.0;
-        System.out.println("Observed Heterozygosity (Ho): "+rounded);
+        System.out.println("Average Observed Heterozygosity (Ho): "+rounded);
     }
 
     public static void calcExpHeterozygosity(Map vcf){
@@ -304,7 +303,7 @@ public class Main {
         });
         double summedAvgExpHet = sumExpHet.get() / lstat.size();
         double rounded = Math.round(summedAvgExpHet * 1000.0) / 1000.0;
-        System.out.println("Expected Heterozygosity (He): "+rounded);
+        System.out.println("Average Expected Heterozygosity (He): "+rounded);
     }
 
     public static void calcUnbiasedExpHeterozygosity(Map vcf){
@@ -330,7 +329,7 @@ public class Main {
         });
         double summedAvgUnbiasedExpHet = sumUnbiasedExpHet.get() / lstat.size();
         double rounded = Math.round(summedAvgUnbiasedExpHet * 1000.0) / 1000.0;
-        System.out.println("Unbiased Expected Heterozygosity (uHe): "+rounded);
+        System.out.println("Average Unbiased Expected Heterozygosity (uHe): "+rounded);
     }
 
     public static void calcShannonsI(Map vcf){
@@ -361,7 +360,7 @@ public class Main {
         });
         double summedAvgShannon = sumShannon.get() / lstat.size();
         double rounded = Math.round(summedAvgShannon * 1000.0) / 1000.0;
-        System.out.println("Shannon's Information Index (SI): "+rounded);
+        System.out.println("Average Shannon's Information Index (SI): "+rounded);
     }
 
     public static void calcSimpsonsI(Map vcf){
@@ -381,7 +380,7 @@ public class Main {
         });
         double summedAvgSimpson = sumSimpson.get() / lstat.size();
         double rounded = Math.round(summedAvgSimpson * 1000.0) / 1000.0;
-        System.out.println("Simpson's Diversity Index (D): "+rounded);
+        System.out.println("Average Simpson's Diversity Index (D): "+rounded);
     }
 
     public static void calcFixationI(Map vcf){
@@ -413,7 +412,7 @@ public class Main {
         });
         double summedFindex = sumF.get() / lstat.size();
         double rounded = Math.round(summedFindex * 1000.0) / 1000.0;
-        System.out.println("Fixation Index (F): "+rounded);
+        System.out.println("Average Fixation Index (F): "+rounded);
     }
 
     public static void calcAR(Map vcf){
@@ -468,8 +467,8 @@ public class Main {
         });
         double summedAR = sumAR.get() / lstat.size();
         double rounded = Math.round(summedAR * 1000.0) / 1000.0;
-        System.out.println("Allelic Richness (Ar): "+rounded);
+        System.out.println("Average Allelic Richness (Ar): "+rounded);
     }
-    
+
 
 }
