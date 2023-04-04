@@ -6,18 +6,21 @@
 
 # jVCFparser
 ### A command-line parser for VCF files designed for population genetics analyses.
+![screen1](https://user-images.githubusercontent.com/104054427/229739012-56df4748-5d95-4037-80a2-067c3e052e25.png)
 
 This is a beta version of the jVCFparser command line tool for processing variant call format (VCF) files. The tool uses memory-efficient descriptive statistics to load VCF file data into memory and then perform population genetics calculations on it. Since the tool only stores allele and genotype frequencies, it is able to process large files. Although reading the files may take some time, all calculations are extremely fast. The tool has been tested on VCF versions 4.0 and 4.2.
 
-VCF 4.2 description (23.08.2022): The manual can be accessed on [SAMtools site](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
+VCF 4.2 description (08.23.2022): The manual can be accessed on [SAMtools site](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
+
+Date of last modification: 04.04.2023
 
 ### Usage (example)
 
 Get the JAR artifact [HERE](https://github.com/endreth/jVCFparser/blob/7dfacf604013e732b53484171909c0b713c56537/out/artifacts/jVCFparser_jar/jVCFparser.jar)!
 ```
-$ java -jar jVCFparser.jar -f ".\populations.snps.vcf" -agc -oh -eh
+$ java -jar jVCFparser.jar -f ".\populations.snps.vcf" -mg 
 ```
-![image](https://user-images.githubusercontent.com/104054427/226903182-23d5e9aa-1b05-4381-9647-75c658f05bb8.png)
+![screen2](https://user-images.githubusercontent.com/104054427/229739037-ca01ea63-0759-4dbd-b341-665ce094a265.png)
 
 | Flag | LFlag | Description |
 | --- | --- | --- |
@@ -125,7 +128,7 @@ F represents the Average Fixation Index, averaged across n loci. It is calculate
 <b>Average Allelic Richness (Ar):</b>
 
 ![ar](https://user-images.githubusercontent.com/104054427/226842779-bcde0246-d58d-4226-9c0e-eea1b6014b5d.png)<br>
-Ar represents the Average Allelic Richness, defined as the expected number of species in a sample of n genotypes selected at random from a collection containing N alleles ("genes") from S loci. It is calculated as the number of alleles observed in a sample of size N<sub>i</sub>, normalized by the sample size N<sub>i</sub> and averaged across S loci. Based on Hurlbert (1971) and El Mousadik & Petit (1996). NOTE: Not designed and not suitable for big data!<br>
+Ar represents the Average Allelic Richness, defined as the expected number of species in a sample of n genotypes selected at random from a collection containing N alleles ("genes") from S loci. It is calculated as the number of alleles observed in a sample of size N<sub>i</sub>, normalized by the sample size N<sub>i</sub> and averaged across S loci. Based on Hurlbert (1971) and El Mousadik & Petit (1996). **NOTE: Not designed and not suitable for big data!**<br>
 
 </details>
 
