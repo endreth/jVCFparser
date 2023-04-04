@@ -21,12 +21,21 @@ public class Main {
         source.setRequired(true);
         options.addOption(source);
 
-        options.addOption(new Option("agc", "agcounts", false, "Allele-Genotype counts"));
+        options.addOption(new Option("mg", "missg", false, "Missing genotypes counts"));
+        options.addOption(new Option("ra", "refa", false, "REF alleles counts"));
+        options.addOption(new Option("aa", "alta", false, "Alt alleles counts"));
+        options.addOption(new Option("gc", "gcounts", false, "Genotypes counts"));
+        options.addOption(new Option("dgc", "diffgcounts", false, "Different genotypes counts"));
+        options.addOption(new Option("da", "dacounts", false, "Different alleles counts"));
+        options.addOption(new Option("ea", "eacounts", false, "Effective alleles counts"));
+        options.addOption(new Option("het", "hetcounts", false, "Heterozygotes counts"));
+        options.addOption(new Option("hom", "homcounts", false, "Homozygotes counts"));
+
         options.addOption(new Option("oh", "obshet", false, "Average Observed Heterozygosity (Ho)"));
         options.addOption(new Option("eh", "exphet", false, "Average Expected Heterozygosity (He)"));
         options.addOption(new Option("ueh", "uexphet", false, "Average Unbiased Expected Heterozygosity (uHe)"));
         options.addOption(new Option("sh", "shann", false, "Average Shannon's Information Index (H)"));
-        options.addOption(new Option("si", "simp", false, "Average Simpson's Diversity Index (D)"));
+        options.addOption(new Option("sd", "simp", false, "Average Simpson's Diversity Index (D)"));
         options.addOption(new Option("fx", "fix", false, "Average Fixation Index (F)"));
         options.addOption(new Option("ar", "arich", false, "Average Allelic Richness (Ar)"));
 
@@ -46,18 +55,33 @@ public class Main {
                 vcf.setVcfMap(parse.readVCF(opt_config));
             }
 
-            if(cmd.hasOption("agc")) {
+            if(cmd.hasOption("mg")) {
                 clc.numOfMissingGT(vcf.getVcfMap());
+            }
+            if(cmd.hasOption("ra")) {
                 clc.numOfREFAllele(vcf.getVcfMap());
+            }
+            if(cmd.hasOption("aa")) {
                 clc.numOfALTAllele(vcf.getVcfMap());
+            }
+            if(cmd.hasOption("gc")) {
                 clc.numOfGenotypes(vcf.getVcfMap());
+            }
+            if(cmd.hasOption("dgc")) {
                 clc.numOfDiffGenotypes(vcf.getVcfMap());
+            }
+            if(cmd.hasOption("da")) {
                 clc.numOfDiffAlleles(vcf.getVcfMap());
+            }
+            if(cmd.hasOption("ea")) {
                 clc.numOfEffAlleles(vcf.getVcfMap());
+            }
+            if(cmd.hasOption("het")) {
                 clc.numOfHeterozygotes(vcf.getVcfMap());
+            }
+            if(cmd.hasOption("hom")) {
                 clc.numOfHomozygotes(vcf.getVcfMap());
             }
-
             if(cmd.hasOption("oh")) {
                 clc.calcObsHeterozygosity(vcf.getVcfMap());
             }
@@ -70,8 +94,8 @@ public class Main {
             if(cmd.hasOption("sh")) {
                 clc.calcShannonsI(vcf.getVcfMap());
             }
-            if(cmd.hasOption("si")) {
-                clc.calcSimpsonsI(vcf.getVcfMap());
+            if(cmd.hasOption("sd")) {
+                clc.calcSimpsonsD(vcf.getVcfMap());
             }
             if(cmd.hasOption("fx")) {
                 clc.calcFixationI(vcf.getVcfMap());
