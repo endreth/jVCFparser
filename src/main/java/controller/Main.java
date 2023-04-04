@@ -42,6 +42,7 @@ public class Main {
         CommandLine cmd;
         CommandLineParser parser = new BasicParser();
         HelpFormatter helper = new HelpFormatter();
+        helper.setOptionComparator(null);
 
         try {
             cmd = parser.parse(options, args);
