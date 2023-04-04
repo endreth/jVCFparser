@@ -21,15 +21,15 @@ public class Main {
         source.setRequired(true);
         options.addOption(source);
 
-        options.addOption(new Option("mg", "missg", false, "Missing genotypes counts"));
-        options.addOption(new Option("ra", "refa", false, "REF alleles counts"));
-        options.addOption(new Option("aa", "alta", false, "Alt alleles counts"));
-        options.addOption(new Option("gc", "gcounts", false, "Genotypes counts"));
-        options.addOption(new Option("dgc", "diffgcounts", false, "Different genotypes counts"));
-        options.addOption(new Option("da", "dacounts", false, "Different alleles counts"));
-        options.addOption(new Option("ea", "eacounts", false, "Effective alleles counts"));
-        options.addOption(new Option("het", "hetcounts", false, "Heterozygotes counts"));
-        options.addOption(new Option("hom", "homcounts", false, "Homozygotes counts"));
+        options.addOption(new Option("mg", "missg", false, "Missing genotype counts"));
+        options.addOption(new Option("ra", "refa", false, "REF allele counts"));
+        options.addOption(new Option("aa", "alta", false, "ALT allele counts"));
+        options.addOption(new Option("gc", "gcounts", false, "Genotype counts"));
+        options.addOption(new Option("dgc", "diffgcounts", false, "Different genotype counts"));
+        options.addOption(new Option("da", "dacounts", false, "Different allele counts"));
+        options.addOption(new Option("ea", "eacounts", false, "Effective allele counts"));
+        options.addOption(new Option("het", "hetcounts", false, "Heterozygote counts"));
+        options.addOption(new Option("hom", "homcounts", false, "Homozygote counts"));
 
         options.addOption(new Option("oh", "obshet", false, "Average Observed Heterozygosity (Ho)"));
         options.addOption(new Option("eh", "exphet", false, "Average Expected Heterozygosity (He)"));
