@@ -21,7 +21,15 @@ $ java -jar jVCFparser.jar -f ".\populations.snps.vcf" -agc -oh -eh
 
 | Flag | LFlag | Description |
 | --- | --- | --- |
-| `-agc` | `-agcounts` | Allele-genotype counts |
+| `-mg` | `-missg` | Missing genotype counts |
+| `-ra` | `-refa` | REF allele counts |
+| `-aa` | `-alta` | ALT allele counts |
+| `-gc` | `-gcounts` | Genotype counts |
+| `-dgc` | `-diffgcounts` | Different genotype counts |
+| `-da` | `-dacounts` | Different allele counts |
+| `-ea` | `-eacounts` | Effective allele counts |
+| `-het` | `-hetcounts` | Heterozygote counts |
+| `-hom` | `-homcounts` | Homozygote counts |
 | `-oh` | `-obshet` | Average Observed Heterozygosity (Ho) |
 | `-eh` | `-exphet` | Average Expected Heterozygosity (He) |
 | `-ueh` | `-uexphet` | Average Unbiased Expected Heterozygosity (uHe) |
