@@ -1,8 +1,8 @@
-![GitHub](https://img.shields.io/github/license/endreth/jvcfparser?color=%23202020&style=flat-square)
-![GitHub top language](https://img.shields.io/github/languages/top/endreth/jVCFparser?color=%23202020&style=flat-square) 
-![GitHub language count](https://img.shields.io/github/languages/count/endreth/jVCFparser?color=%23202020&style=flat-square) 
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/endreth/jVCFparser?color=%23202020&style=flat-square) 
-![GitHub repo size](https://img.shields.io/github/repo-size/endreth/jVCFparser?color=%23202020&style=flat-square)
+![GitHub](https://img.shields.io/github/license/endreth/jVCFparser?color=%23202020&style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/endreth/jvcfparser?color=%23202020&style=flat-square) 
+![GitHub language count](https://img.shields.io/github/languages/count/endreth/jvcfparser?color=%23202020&style=flat-square) 
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/endreth/jvcfparser?color=%23202020&style=flat-square) 
+![GitHub repo size](https://img.shields.io/github/repo-size/endreth/jvcfparser?color=%23202020&style=flat-square)
 
 # jVCFparser
 ### A command-line parser for VCF files designed for population genetics analyses.
